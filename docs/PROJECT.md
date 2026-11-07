@@ -21,6 +21,20 @@ Measured values only; a value that has not been measured stays "pending measurem
 
 | Metric | Value |
 |---|---|
-| Tokens (input / output) | pending measurement |
+| Tokens (input / output) | 457197 / 13147 |
 | Hours (human) | pending measurement |
-| Cost (USD) | pending measurement |
+| Cost (USD) | 0.0997 |
+
+## Factory run u115 (measured from API usage)
+
+| Phase | Model | Batch | Input | Output | Cache write | Cache read | Cost (USD) |
+|---|---|---|---|---|---|---|---|
+| generation | gemini-3.8-flash | yes | 4078 | 9186 | 0 | 0 | 0.0188 |
+| fix-1 | gemini-3.1-flash-lite | no | 13052 | 335 | 0 | 0 | 0.0038 |
+| fix-2 | gemini-3.1-flash-lite | no | 12729 | 197 | 0 | 4032 | 0.0036 |
+| fix-3 | gemini-3.1-flash-lite | no | 13285 | 195 | 0 | 2018 | 0.0037 |
+| fix-4 | gemini-3.1-flash-lite | no | 18152 | 1043 | 0 | 14188 | 0.0065 |
+| audit | gemini-3.1-flash-lite | no | 62668 | 330 | 0 | 150042 | 0.0199 |
+| docs | gemini-3.1-flash-lite | no | 162953 | 1861 | 0 | 0 | 0.0435 |
+
+Total: $0.0997. Prices: Anthropic list prices.

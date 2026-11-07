@@ -1,29 +1,15 @@
 # Architecture
 
-## Purpose
+`language-detect-lite` implements document language identification using the Cavnar & Trenkle (1994) n-gram frequency method.
 
-`trysac-language-detect-lite` is a small, dependency-free Python library: Dependency-free language detection with character trigram profiles and the Cavnar-Trenkle out-of-place distance, six bundled languages and trainable custom profiles
+## Data Pipeline
 
-## Shape
+1. **Text Normalization**: Input text is normalized using Unicode `NFKC` and case-folded.
+2. **Tokenization & Padding**: Non-letter characters (or digit runs) are stripped or treated as delimiters. Each word is padded with leading and trailing spaces (`" word "`).
+3. **Trigram Generation**: Overlapping 3-character substrings are counted and sorted descending by frequency, with alphabetical tie-breaking.
+4. **Profile Matching**: Up to `top` (default 300) trigrams form the profile. For a target text, out-of-place distance computes difference in ranks compared to language profiles.
+5. **Scoring**: Scores are normalized to `[0.0, 1.0]` where higher scores indicate stronger similarity.
 
-```text
-caller code --> language_detect_lite (public API in __init__.py)
-                    |
-                    +-- pure functions, no I/O, no global state
-```
+## Resource Bundling
 
-- **Public API**: the names listed in `__all__` of `src/language_detect_lite/__init__.py`. Anything else is
-  internal and may change without a major version.
-- **Errors**: invalid input raises built-in exceptions (`ValueError`, `TypeError`) with a clear
-  message; the library never prints or exits.
-- **Side effects**: none. If a feature needs I/O, isolate it in its own module behind a small
-  interface and record the choice in an ADR.
-
-## Quality contract
-
-`scripts/check.py` is the single definition of the gates; `fabrica.json` tells the factory and CI
-how to run it. See [TESTING.md](TESTING.md).
-
-## Decisions
-
-Architecture decisions are recorded in [decisions/](decisions/) as numbered ADRs.
+Bundled language texts (`en`, `es`, `fr`, `de`, `pt`, `it`) are stored as plain text files under `src/language_detect_lite/data/` and loaded lazily via `importlib.resources` and `functools.cache`.

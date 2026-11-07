@@ -1,48 +1,47 @@
 # language-detect-lite
 
-[![PyPI version](https://img.shields.io/pypi/v/trysac-language-detect-lite)](https://pypi.org/project/trysac-language-detect-lite/)
-[![License: MIT](https://img.shields.io/pypi/l/trysac-language-detect-lite)](LICENSE)
 [![CI](https://github.com/Trysac/u115-language-detect-lite/actions/workflows/ci.yml/badge.svg)](https://github.com/Trysac/u115-language-detect-lite/actions/workflows/ci.yml)
 
-Dependency-free language detection with character trigram profiles and the Cavnar-Trenkle out-of-place distance, six bundled languages and trainable custom profiles
+Fast, dependency-free language detection using character trigram profiles and the Cavnar-Trenkle out-of-place distance method (1994). Includes bundled profiles for six major languages (`en`, `es`, `fr`, `de`, `pt`, `it`) and supports custom training.
 
-## Problem
+## Features
 
-Describe in two or three sentences the concrete problem this utility solves, who hits it, and what
-they do today without it. Replace this paragraph when the first real feature lands.
+- **Zero runtime dependencies**: Pure Python standard library implementation.
+- **Cavnar-Trenkle Algorithm**: Character trigram ranking with out-of-place distance.
+- **6 Bundled Languages**: English (`en`), Spanish (`es`), French (`fr`), German (`de`), Portuguese (`pt`), and Italian (`it`).
+- **Trainable**: Easily create custom profiles using `train()`.
+- **Deterministic & Safe**: Bounded memory, scanning limits, and full typing support.
+- **CLI Included**: Terminal tool for one-shot text detection and candidate ranking.
 
-## Install
+## Installation
 
-```sh
+```bash
 pip install trysac-language-detect-lite
-# or
-uv add trysac-language-detect-lite
 ```
-
-Requires Python 3.10 or newer. No runtime dependencies.
 
 ## Usage
 
 ```python
-import language_detect_lite
+import language_detect_lite as ldl
 
-# normalize() trims surrounding whitespace and lower-cases the text.
-print(language_detect_lite.normalize("  Hello World "))  # -> "hello world"
+text = "The weather is very nice today and we are going to the beach with our friends"
+print(ldl.detect(text))  # 'en'
 
-# Blank input is rejected explicitly instead of returning an empty string.
-try:
-    language_detect_lite.normalize("   ")
-except ValueError as exc:
-    print(f"rejected: {exc}")
+scores = ldl.rank("Bonjour le monde")
+print(scores[0])  # ('fr', ...)
 ```
 
-## Documentation
+## CLI Usage
 
-- [Architecture](docs/ARCHITECTURE.md) and [decisions](docs/decisions/)
-- [Testing](docs/TESTING.md) and [security](docs/SECURITY.md)
-- [Project record](docs/PROJECT.md) and [stack](docs/STACK.md)
-- [Changelog](CHANGELOG.md) and [contributing guide](CONTRIBUTING.md)
+```bash
+# Detect language of text from stdin
+echo "Das Wetter ist heute sehr schön" | python -m language_detect_lite
+# Output: de
+
+# Rank all language candidates with scores
+python -m language_detect_lite --rank sample.txt
+```
 
 ## License
 
-[MIT](LICENSE) (c) 2026 Miguel Gomez
+MIT

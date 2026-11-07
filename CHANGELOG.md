@@ -9,4 +9,5 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Implement Cavnar-Trenkle character trigram language detector with bundled en, es, fr, de, pt, it profiles and CLI.
 - Initial project structure from the factory utility template.
