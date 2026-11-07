@@ -19,6 +19,9 @@ classifiers = [
 ]
 dependencies = []
 
+[project.scripts]
+language-detect-lite = "language_detect_lite.__main__:main"
+
 [project.urls]
 Homepage = "https://github.com/Trysac/u115-language-detect-lite"
 Source = "https://github.com/Trysac/u115-language-detect-lite"
