@@ -15,8 +15,10 @@ Fast, dependency-free language detection using character trigram profiles and th
 
 ## Installation
 
+Not published to PyPI yet. Install it from GitHub:
+
 ```bash
-pip install trysac-language-detect-lite
+pip install "git+https://github.com/Trysac/u115-language-detect-lite"
 ```
 
 ## Usage
